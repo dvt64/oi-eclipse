@@ -1,15 +1,15 @@
-Aggregator repo for Eclipse SDK builds
+Eclipse SDK port for illumos-based distros (tested under OpenIndiana)
 ======================================
 
 This repo is used to build the Eclipse SDK which provides the framework for Eclipse based applications, the Java development tooling and the Plug-in development tooling.
 To clone it, it is recommended to use one of the URLs found on the following website: 
-https://github.com/eclipse-platform/eclipse.platform.releng.aggregator
+https://github.com/dvt64/oi-eclipse
 
 An anonymous clone can be done via the following commands:
 
 ```
-git clone https://github.com/eclipse-platform/eclipse.platform.releng.aggregator.git
-cd eclipse.platform.releng.aggregator
+git clone https://github.com/dvt64/oi-eclipse.git
+cd oi-eclipse
 git submodule update --init --recursive
 ```
 
@@ -19,79 +19,24 @@ How to build the Eclipse SDK
 ----------------------------
 
 To run a complete build, on your local machine, run the following commands.
-The `-DskipTests=true` will skip the tests which take a significant time to run, e.g., up to 10 hours.
-
-```
-# clean up "dirt" from previous build see Bug 420078
-git submodule foreach git clean -f -d -x
-git submodule foreach git reset --hard HEAD
-git clean -f -d -x
-git reset --hard HEAD
-
-# update master and submodules
-git checkout master
-git pull --recurse-submodules
-git submodule update
-
-# run the build
-mvn clean verify  -DskipTests=true
+./scripts/solaris/build-solaris.sh
 
 # find the results in
-# eclipse.platform.releng.tychoeclipsebuilder/eclipse.platform.repository/target/products
-```
-
-Build with custom compiler
---------------------------
-
-To compile the build itself with a custom compiler perform the follwoing step after cloning the submodules:
-
-```
-# compile local version
-mvn clean install -f eclipse.jdt.core/org.eclipse.jdt.core.compiler.batch -DlocalEcjVersion=99.99
-
-# run build with local compiler
-mvn clean verify  -DskipTests=true -Dcbi-ecj-version=99.99
+# oi-eclipse/products/eclipse-sdk/target/products/org.eclipse.sdk.ide/solaris/gtk/x86_64/eclipse
 ```
 
 Build requirements
 ------------------
 
-The build commands require the installation and setup of Java 17 or higher and Maven version 3.5.4 or higher.
-See also the complete instructions on the [Platform Build wiki](https://wiki.eclipse.org/Platform-releng/Platform_Build "Platform Build"). 
-Note, it is highly recommended to use toolchains.xml and -Pbree-libs as decribed in [Using BREE Libs](https://wiki.eclipse.org/Platform-releng/Platform_Build#Using_BREE_Libs "Using BREE Libs").
+The build commands require the installation and setup of Java 17 or higher, Maven version 3.5.4 or higher. Extra dependencies: gcc, gnu-make, pkg-config, gtk3, cairo.
 
-Integration builds
-------------------
+How to run
+----------
+1. Create file org.eclipse.urischeme.prefs in oi-eclipse/products/eclipse-sdk/target/products/org.eclipse.sdk.ide/solaris/gtk/x86_64/eclipse/configuration/.settings with following contents:
+eclipse.preferences.version=1
+skipAutoRegistration=true
 
-The integrations (nightly) build jobs are hosted on Jenkins instance https://ci.eclipse.org/releng/job/Builds/.
-
-The job with the highest release number is the one that builds nightly SDK build, like https://ci.eclipse.org/releng/job/Builds/job/I-build-4.36/ job for 4.36 SDK.
-
-- The build artifacts and test results are accessible at https://download.eclipse.org/eclipse/downloads/
-- If the tests fail to start, test jobs for each platform can be found at https://ci.eclipse.org/releng/job/AutomatedTests/
-- If the build is successful but SDK is broken and shouldn't be used, the build can be marked as unstable via https://ci.eclipse.org/releng/job/Builds/job/markUnstable/
-- Weekly maven snapshots are [built on Jenkins](https://ci.eclipse.org/releng/view/Publish%20to%20Maven/) and available at https://repo.eclipse.org/content/repositories/eclipse-snapshots/
-
-Milestone and release tasks
------------------
-See [Releng-Tasks 2.0](RELEASE.md) (includes links to schedule, calendar etc)
-
-Performance Tests
------------------
-See [Performance README.md](production/README.md)
-
-How to contribute
------------------
-Contributions to Eclipse Platform are most welcome. There are many ways to contribute,
-from entering high quality bug reports, to contributing code or documentation changes.
-For a complete guide, see https://github.com/eclipse-platform/.github/blob/main/CONTRIBUTING.md.
-
-Additional informations
------------------------
-
-Eclipse Platform Project committers should also read [Automated Platform Builds](https://wiki.eclipse.org/Platform-releng/Automated_Platform_Build "Automated Platform Builds").
-
-Release Engineers should also be familiar with other documents on the [Releng Wiki](https://wiki.eclipse.org/Category:Eclipse_Platform_Releng "Releng Wiki").
+2. Running via: GTK_IM_MODULE=ibus ./eclipse
 
 License
 -------
