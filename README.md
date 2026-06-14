@@ -18,17 +18,18 @@ The latter command will clone all submodules.
 How to build the Eclipse SDK
 ----------------------------
 
-To run a complete build, on your local machine, run the following commands.
+To run a complete build, on your local machine, run the following commands:
 ./scripts/solaris/build-solaris.sh
 
 # find the results in
-# oi-eclipse/products/eclipse-sdk/target/products/org.eclipse.sdk.ide/solaris/gtk/x86_64/eclipse
+oi-eclipse/products/eclipse-sdk/target/products/org.eclipse.sdk.ide/solaris/gtk/x86_64/eclipse
 ```
 
 Build requirements
 ------------------
 
-The build commands require the installation and setup of Java 17 or higher, Maven version 3.5.4 or higher. Extra dependencies: gcc, gnu-make, pkg-config, gtk3, cairo.
+The build commands require the installation and setup of Java 17 or higher, Maven version 3.5.4 or higher.
+Extra dependencies: gcc, gnu-make, pkg-config, gtk3, cairo.
 
 How to run
 ----------
