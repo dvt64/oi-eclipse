@@ -1,4 +1,4 @@
-Eclipse SDK port for illumos-based distros (tested under OpenIndiana)
+Eclipse SDK port for illumos-based distros and Oracle Solaris 11.4 CBE
 ======================================
 
 This repo is used to build the Eclipse SDK which provides the framework for Eclipse based applications, the Java development tooling and the Plug-in development tooling.
@@ -21,7 +21,7 @@ How to build the Eclipse SDK
 To run a complete build, on your local machine, run the following commands:
 ./scripts/solaris/build-solaris.sh
 
-# find the results in
+find the results in
 oi-eclipse/products/eclipse-sdk/target/products/org.eclipse.sdk.ide/solaris/gtk/x86_64/eclipse
 ```
 
